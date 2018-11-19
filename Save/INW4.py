@@ -1,0 +1,372 @@
+# -*- coding: utf-8 -*-
+
+import SATAN2
+from SATAN2.lib.curve.ttypes import *
+from datetime import datetime
+import time, random, sys, ast, re, os, io, json, subprocess, threading, urllib, string, codecs, requests, ctypes, urllib3, wikipedia, tempfile
+from bs4 import BeautifulSoup
+from io import StringIO
+from threading import Thread
+from gtts import gTTS
+from googletrans import Translator
+
+cl = SATAN2.LINE()
+cl.nxtQRLogin()
+
+Kicker = [cl]
+OMG = "0.1.2"
+Amid = cl.getProfile()
+Creator = "u4c9ac515f9763bea5f4bac3e1a00fa22"
+TCreator = "u4c9ac515f9763bea5f4bac3e1a00fa55"
+Admin = cl.getProfile()
+ListList = [Amid,Creator]
+wait = {
+    "AutoAdd":True,
+    "message":"THX FOR ADD ME\n\nline.me/ti/p/~esci_",
+    "Protection":False,
+    "blacklist":{},
+    "whitelist":{},
+    "wblacklist":False,
+    "dblacklist":False,
+    "leaveRoom":True,
+    "Like":True,
+    "Comment":True,
+    "CommentText":"THIS IS AUTO LIKE BY\nSATAN\nline.me/ti/p/~esci_",
+    "MemberJoin":"Hi",
+    "MemberLeave":"Bye",
+    "MemberKick":"Wow",
+    "Op1":False,
+    "Op2":False,
+    "Op3":False,
+	"lang":"TH",
+    "Tag":False,
+}
+
+setting1 = {
+    "MemberJoin":"Hi"
+}
+wait2 = {
+    "readPoint":{},
+    "readMember":{},
+    "setTime":{},
+    "ROM":{}
+    }
+
+setTime = {}
+setTime = wait2['setTime']
+mulai = time.time() 
+
+def sendMessage(to, text, contentMetadata={}, contentType=0):
+    mes = Message()
+    mes.to, mes.from_ = to, profile.mid
+    mes.text = text
+    mes.contentType, mes.contentMetadata = contentType, contentMetadata
+    if to not in messageReq:
+        messageReq[to] = -1
+    messageReq[to] += 1
+
+
+def TagallD():
+    if msg.to in wait2['readPoint']:
+        try:
+            del wait2['readPoint'][msg.to]
+            del wait2['readMember'][msg.to]
+            del wait2['setTime'][msg.to]
+        except:
+            pass
+        wait2['readPoint'][msg.to] = msg.id
+        wait2['readMember'][msg.to] = ""
+        wait2['setTime'][msg.to] = datetime.now().strftime('%H:%M:%S')
+        wait2['ROM'][msg.to] = {}
+        with open('sider.json', 'w') as fp:
+         json.dump(wait2, fp, sort_keys=True, indent=4)
+    else:
+        try:
+            del wait2['readPoint'][msg.to]
+            del wait2['readMember'][msg.to]
+            del wait2['setTime'][msg.to]
+        except:
+            pass
+        wait2['readPoint'][msg.to] = msg.id
+        wait2['readMember'][msg.to] = ""
+        wait2['setTime'][msg.to] = datetime.now().strftime('%H:%M:%S')
+        wait2['ROM'][msg.to] = {}
+        with open('sider.json', 'w') as fp:
+         json.dump(wait2, fp, sort_keys=True, indent=4)
+         print(wait2)
+
+def bot(op):
+    global start_runtime
+    try:
+        if op.type == 0:
+            return
+        if op.type == 25:
+            msg = op.message
+            if msg.text in ["Me","me"]:
+                msg.text = None
+                msg.contentType = 13
+                msg.contentMetadata = {'mid': Admin}
+                cl.sendMessage(msg)
+
+            elif msg.text is None:
+                return
+
+            elif msg.text in ["Opp1"]:
+                cl.sendText(msg.to,"Opp1 is "+wait["MemberJoin"])
+            elif "Opp1:" in msg.text:
+                SetOpp = msg.text.replace("Opp1:","")
+                cl.sendText(msg.to,"Set Opp1 to "+SetOpp)
+                wait["MemberJoin"] = SetOpp
+            elif msg.text in ["Opp1 on"]:
+                if wait["Op1"] == True:
+                    cl.sendText(msg.to,"เปิดอยู่แล้ว")
+                else:
+                    wait["Op1"] = True
+                    cl.sendText(msg.to,"เปิดเรียบร้อยแล้ว")
+            elif msg.text in ["Opp1 off"]:
+                if wait["Op1"] == False:
+                    cl.sendText(msg.to,"ปิดอยู่แล้ว")
+                else:
+                    wait["Op1"] = False
+                    cl.sendText(msg.to,"ปิดเรียบร้อยแล้ว")
+            elif msg.text in ["Opp2"]:
+                cl.sendText(msg.to,"Opp2 is "+wait["MemberJoin"])
+            elif "Opp2:" in msg.text:
+                SetOpp = msg.text.replace("Opp2:","")
+                cl.sendText(msg.to,"Set Opp2 to "+SetOpp)
+                wait["MemberKick"] = SetOpp
+
+            elif msg.text in ["Opp2 on"]:
+                if wait["Op2"] == True:
+                    cl.sendText(msg.to,"เปิดอยู่แล้ว")
+                else:
+                    wait["Op2"] = True
+                    cl.sendText(msg.to,"เปิดเรียบร้อยแล้ว")
+            elif msg.text in ["Opp2 off"]:
+                if wait["Op2"] == False:
+                    cl.sendText(msg.to,"ปิดอยู่แล้ว")
+                else:
+                    wait["Op2"] = False
+                    cl.sendText(msg.to,"ปิดเรียบร้อยแล้ว")
+
+            elif msg.text in ["Opp3"]:
+                cl.sendText(msg.to,"Opp3 is "+wait["MemberLeave"])
+            elif "Opp3:" in msg.text:
+                SetOpp = msg.text.replace("Opp3:","")
+                cl.sendText(msg.to,"Set Opp3 to "+SetOpp)
+                wait["MemberLeave"] = SetOpp
+
+            elif msg.text in ["Opp3 on"]:
+                if wait["Op3"] == True:
+                    cl.sendText(msg.to,"เปิดอยู่แล้ว")
+                else:
+                    wait["Op3"] = True
+                    cl.sendText(msg.to,"เปิดเรียบร้อยแล้ว")
+            elif msg.text in ["Opp3 off"]:
+                if wait["Op3"] == False:
+                    cl.sendText(msg.to,"ปิดอยู่แล้ว")
+                else:
+                    wait["Op3"] = False
+                    cl.sendText(msg.to,"ปิดเรียบร้อยแล้ว")
+
+        if op.type == 26:
+            msg = op.message
+            if msg.text in ["Me","me"]:
+                msg.text = None
+                msg.contentType = 13
+                msg.contentMetadata = {'mid': Admin}
+                cl.sendMessage(msg)
+
+            elif msg.text is None:
+                return
+
+            elif "/อ่าน" == msg.text.lower():
+                    if msg.to in wait2['readPoint']:
+                        if list(wait2["ROM"][msg.to].items()) == []:
+                             cl.sendText(msg.to, "รายชื่อผู้ที่อ่าน  :\n")
+                        else:
+                            chiya = []
+                            for rom in list(wait2["ROM"][msg.to].items()):
+                                chiya.append(rom[1])
+                               
+                            cmem = cl.getContacts(chiya)
+                            zx = ""
+                            zxc = ""
+                            zx2 = []
+                            xpesan = 'รายชื่อผู้ที่อ่าน  :\n'
+                        for x in range(len(cmem)):
+                                xname = str(cmem[x].displayName)
+                                pesan = ''
+                                pesan2 = pesan+"@a\n"
+                                xlen = str(len(zxc)+len(xpesan))
+                                xlen2 = str(len(zxc)+len(pesan2)+len(xpesan)-1)
+                                zx = {'S':xlen, 'E':xlen2, 'M':cmem[x].mid}
+                                zx2.append(zx)
+                                zxc += pesan2
+                                msg.contentType = 0
+           
+                        print(zxc)
+                        msg.text = xpesan+ zxc + "\nเวลาที่ตั้งจุดอ่าน : %s\nเวลาตอนนี้ : %s"%(wait2['setTime'][msg.to],datetime.now().strftime('%H:%M:%S'))
+                        lol ={'MENTION':str('{"MENTIONEES":'+json.dumps(zx2).replace(' ','')+'}')}
+                        print(lol)
+                        msg.contentMetadata = lol
+                        try:
+                          cl.sendMessage(msg)
+                          del wait2['readPoint'][msg.to]
+                          del wait2['readMember'][msg.to]
+                          del wait2['setTime'][msg.to]
+                        except Exception as error:
+                              print(error)
+                        pass
+               
+                    else:
+                        TagallD()
+
+            elif msg.text in ["Hp","Help","คำสั่ง"]:
+                nowTimeis = datetime.now()
+                nowH = datetime.strftime(nowTimeis,"%H")
+                nowM = datetime.strftime(nowTimeis,"%M")
+                nowS = datetime.strftime(nowTimeis,"%S")
+                tm = "\nNow : "+nowH+":"+nowM+":"+nowS
+                HelpMessage = """
+$ SLC PREMIUM $
+TYPE : เยต้า
+โดย : SATAN
+line.me/ti/p/~esci_"""+tm+"""
+
+ใส่  . หน้าคำส่ง
+
+- ps (ข้อความ)
+- gos (ข้อความ)
+- yt (ข้อความ)
+- tagall
+- linkid (ID ไลน์)
+- อ่าน
+- sat (ชื่อ)
+- helpinv
+
+@ โปรดรอ @
+- reinvite
+
+"""
+                cl.sendText(msg.to,HelpMessage)
+        if op.type == 26:
+            msg = op.message
+			#if msg.text in ["sat","sat"]:
+				#Textsat = rst.replace("\n", " ")
+				#du = [' ̍',' ̎',' ̄',' ̅',' ̿',' ̑',' ̆',' ̐',' ͒',' ͗',' ͑',' ̇',' ̈',' ̊',' ͂',' ̓',' ̈́',' ͊',' ͋',' ͌',' ̃',' ̂',' ̌',' ͐',' ́',' ̋',' ̏',' ̽',' ̉',' ͣ',' ͤ',' ͥ',' ͦ',' ͧ',' ͨ',' ͩ',' ͪ',' ͫ',' ͬ',' ͭ',' ͮ',' ͯ',' ̾',' ͛',' ͆',' ̚',]
+				#dm = [' ̕',' ̛',' ̀',' ́',' ͘',' ̡',' ̢',' ̧',' ̨',' ̴',' ̵',' ̶',' ͜',' ͝',' ͞',' ͟',' ͠',' ͢',' ̸',' ̷',' ͡',]
+				#rst_ = du + Textsat + dm
+				#cl.sendText(msg.to,rst_)
+			#elif "/linkid" in msg.text:
+				#MsgToText = msg.text.replace("/linkid ","")
+				#cl.sendText(msg.to,'line.me/ti/p/~'+MsgToText)
+
+            if "/ps" in msg.text:
+                Title = msg.text.replace("/ps ","")
+                Source = "Google Play"
+                Link = "https://play.google.com/store/search?q="+Title
+                Msgtextt = "Title : "+Title+"\nLink : "+Link
+                cl.sendText(msg.to,Msgtextt)
+            elif "helpinv" in msg.text:
+				cl.sendText(msg.to,"ถ้าหากจะเอาบอกลงคลับอื่นให้เชิญบอทเข้ากลุ่มแล้วหรอ 50 วินาทีหรือน้อยกว่า")
+            elif "/gos" in msg.text:
+                Title = msg.text.replace("/gos ","")
+                Link = "https://www.google.co.th/search?q="+Title
+                Msgtextt = "Title : "+Title+"\nLink : "+Link
+                cl.sendText(msg.to,Msgtextt)
+            elif "/yt" in msg.text:
+                try:
+                    textToSearch = (msg.text).replace('/yt ', "").strip()
+                    query = urllib.parse.quote(textToSearch)
+                    url = "https://www.youtube.com/results?search_query=" + query
+                    response = urllib.request.urlopen(url)
+                    html = response.read()
+                    soup = BeautifulSoup(html, "html.parser")
+                    results = soup.find(attrs={'class':'yt-uix-tile-link'})
+                    Msgtextt = 'Title : '+textToSearch+''
+                    cl.sendText(msg.to,Msgtextt+'https://www.youtube.com' + results['href'])
+                except:
+                    cl.sendText(msg.to,"Could not find it")
+
+            elif "/go" in msg.text.lower():
+                spl = re.split("/go","")
+                if spl[0] == "":
+                    if spl[1] != "":
+                        try:
+                            if msg.toType != 0:
+                                cl.sendText(msg.to,"")
+                            else:
+                                cl.sendText(msg.from_,"")
+                            resp = BeautifulSoup(requests.get("https://www.google.co.th/search",params={"q":spl[1],"gl":"th"}).content,"html.parser")
+                            text = "Result :\n"
+                            for el in resp.findAll("h3",attrs={"class":"r"}):
+                                try:
+                                    tmp = el.a["class"]
+                                    continue
+                                except:
+                                    pass
+                                try:
+                                    if el.a["href"].startswith("/search?q="):
+                                        continue
+                                except:
+                                    continue
+                                text += el.a.text+"\n"
+                                text += str(el.a["href"][3:]).split("&sa=U")[0]+"\n\n"
+                            text = text[:-2]
+                            if msg.toType != 0:
+                                cl.sendText(msg.to,str(text))
+                            else:
+                                cl.sendText(msg.from_,str(text))
+                        except Exception as e:
+                            print(e)
+
+            elif "/tagall" in msg.text:
+                group = cl.getGroup(msg.to)
+                k = len(group.members)//100
+                for j in range(k+1):
+                    msg = Message(to=msg.to)
+                    txt = ''
+                    s=0
+                    d=[]
+                    for i in group.members[j*100 : (j+1)*100]:
+                        d.append({"S":str(s), "E" :str(s+8), "M":i.mid})
+                        s += 9
+                        txt += '@Krampus\n'
+                    msg.text = txt
+                    msg.contentMetadata = {'MENTION':json.dumps({"MENTIONEES":d})}
+                    cl.sendMessage(msg)
+
+		#if op.type == 13:
+			#cl.acceptGroupInvitation(op.param1)
+		#if op.type == 13:
+			#cl.acceptGroupInvitation()
+		#if op.type == 13:
+			#cl.acceptGroupInvitation(op.param2)
+    except Exception as e:
+        print(e)
+
+def Loading():
+    while True:
+        try:
+			if op.param2 in TCreator:
+				pass
+			else:
+				cl.acceptGroupInvitation(op.param1)
+            time.sleep(50)
+        except:
+            pass
+thread2 = threading.Thread(target=Loading)
+thread2.daemon = True
+thread2.start()
+
+while True:
+    try:
+        Ops = cl.fetchOps(cl.Poll.rev, 5)
+    except EOFError:
+        raise Exception("It might be wrong revision\n" + str(cl.Poll.rev))
+
+    for Op in Ops:
+        if (Op.type != OpType.END_OF_OPERATION):
+            cl.Poll.rev = max(cl.Poll.rev, Op.revision)
+            bot(Op)

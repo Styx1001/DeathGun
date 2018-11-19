@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+
+import SATAN2
+from SATAN2.lib.curve.ttypes import *
+from datetime import datetime
+import time, random, sys, ast, re, os, io, json, subprocess, threading, urllib, string, codecs, requests, ctypes, urllib3, wikipedia, tempfile
+from bs4 import BeautifulSoup
+from io import StringIO
+from threading import Thread
+from gtts import gTTS
+from googletrans import Translator
+
+cl = SATAN2.LINE()
+cl.nxtQRLogin()
+
+def ScriptSelf(op):
+	try:
+        if op.type == 0:
+            return
+    except Exception as e:
+        print(e)
+
+while True:
+    try:
+        Ops = cl.fetchOps(cl.Poll.rev, 5)
+    except EOFError:
+        raise Exception("It might be wrong revision\n" + str(cl.Poll.rev))
+
+    for Op in Ops:
+        if (Op.type != OpType.END_OF_OPERATION):
+            cl.Poll.rev = max(cl.Poll.rev, Op.revision)
+            ScriptSelf(op)
